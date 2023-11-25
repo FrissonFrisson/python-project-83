@@ -1,4 +1,4 @@
-giname: Frisson Lint
+name: Frisson Lint
 
 on:
   - push
