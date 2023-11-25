@@ -5,4 +5,4 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/1a1d2aebc7c649f916d6/test_coverage)](https://codeclimate.com/github/FrissonFrisson/python-project-83/test_coverage)
 
-[![Frisson Lint](https://github.com/FrissonFrisson/python-project-83/actions/workflows/check_lint.yml/badge.svg)](https://github.com/FrissonFrisson/python-project-83/actions/workflows/check_lint.yml)
+[![Frisson Lint](https://github.com/FrissonFrisson/python-project-83/actions/workflows/check_lint.yml/badge.svg)](https://github.com/FrissonFrisson/python-project-83/actions/workflows/check_lint.yml)gi
