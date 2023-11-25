@@ -6,7 +6,7 @@ authors = ["Your Name"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.7.10"
 flake8 = "^6.1.0"
 pytest = "^7.4.3"
 pytest-cov = "^4.1.0"
