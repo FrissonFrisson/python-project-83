@@ -6,11 +6,15 @@ authors = ["Your Name"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.7.10"
-flake8 = "^3.8.4"
+python = "^3.12"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^6.1.0"
 pytest = "^7.4.3"
 pytest-cov = "^4.1.0"
 gunicorn = "^21.2.0"
+
 
 [build-system]
 requires = ["poetry-core"]
