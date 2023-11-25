@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "hexlet-code"
-version = "0.1.0"
+name = ["hexlet-code"]
+version = ["0.1.0"]
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Your Name"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
