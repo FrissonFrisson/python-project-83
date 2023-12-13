@@ -35,7 +35,7 @@ def analyze_url():
         return redirect(url_for('get_page_url', id = id))
 
 
-@app.route('/urls/<id>')
+@app.route('/urls/<int:id>')
 def get_page_url(id):
     url_info = db.get_url_info(id)
     if not url_info:

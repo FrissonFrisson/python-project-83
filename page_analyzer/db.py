@@ -39,7 +39,7 @@ def add_url(url):
 
 def get_url_info(id):
     conn, cur = connect()
-    cur.execute('SELECT id, name, created_at FROM urls WHERE id = CONVERT(bigint, %s)', (id,))
+    cur.execute('SELECT id, name, created_at FROM urls WHERE id = %s', (id,))
     rows = cur.fetchone()
     conn.close()
     return rows
