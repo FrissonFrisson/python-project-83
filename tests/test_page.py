@@ -6,8 +6,10 @@ def app():
     app = my_app
     app.config.update({
         "TESTING": True,
+        "SQLALCHEMY_DATABASE_URI": "sqlite:///test_db.sqlite"
     }
     )
+
 
     # other setup can go here
 
@@ -31,8 +33,13 @@ def test_index_page(client):
     assert response.status_code == 200
     assert b' <input type="text" name="url" placeholder="https://www.example.com"' in response.data
 
+
 def test_analyze_url(client):
     response = client.post('/urls', data={'url': 'https://www.example.com'})
     assert response.status_code == 200
-    assert b'urls' in response.data
+    assert b'https://www.example.com' in response.data
+    response = client.post('/urls', data={'url': 'https://www.example.com'})
+    assert response.status_code == 302
+    assert b'https://www.example.com' in response.data
+
 

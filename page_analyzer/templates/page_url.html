@@ -40,22 +40,22 @@
       <tbody>
         <tr>
           <td>ID</td>
-          <td>{{id}}</td>
+          <td>{{url_info['id']}}</td>
         </tr>
         <tr>
           <td>Имя</td>
-          <td>{{name}}</td>
+          <td>{{url_info['name']}}</td>
         </tr>
         <tr>
           <td>Дата создания</td>
-          <td>{{date}}</td>
+          <td>{{url_info['date']}}</td>
         </tr>
       </tbody>
     </table>
   </div>
 
     <h2 class="mt-5 mb-3">Проверки</h2>
-    <form method="post" action="/urls/2/checks">
+    <form method="post" action="/urls/{{url_info['id']}}/checks">
     <input type="submit" class="btn btn-primary" value="Запустить проверку">
     </form>
     
@@ -72,7 +72,18 @@
       </tr>
     </thead>
       <tbody>
-    
+        {% if checks_info %}
+          {% for id, resp_code, h1, title, description, created_at in checks_info %}
+          <tr>
+            <td>{{id}}</td>
+            <td>{{resp_code}}</td>
+            <td>{{h1}}</td>
+            <td>{{title}}</td>
+            <td>{{description}}</td>
+            <td>{{created_at}}</td>
+          </tr>
+          {% endfor %}
+        {% endif %}
     </tbody>
     </table>
   </div>

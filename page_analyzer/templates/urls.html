@@ -30,7 +30,7 @@
 
     
 <div class="table-responsive">
-  <table class="table table-bordered table-hover text-nowrap" data-test="urls">
+  <table data-test="urls" class="table table-bordered table-hover text-nowrap" data-test="urls">
     <thead>
     <tr>
       <th>ID</th>
@@ -40,22 +40,8 @@
     </tr>
     </thead>
     <tbody>
-      
-        <tr>
-          <td>1</td>
-          <td>
-            <a href="/urls/1">
-              https://python-page-analyzer-ru.hexlet.app
-            </a>
-          </td>
-          
-          <td></td>
-          
-          
-          <td></td>
-          
-        </tr>
-        {% for id, name, date in urls %}
+        {% if urls %}
+        {% for id, name, date, status_code in urls %}
         <tr>
           <td>{{id}}</td>
           <td>
@@ -64,10 +50,10 @@
             </a>
           </td>
           <td>{{date}}</td>
-          <td>тут код ответа</td>
+          <td>{{status_code}}</td>
         </tr>
         {% endfor %}
-      
+        {% endif %}  
     </tbody>
   </table>
 </div>
