@@ -61,7 +61,7 @@ def get_list_urls():
                 FROM urls
                 LEFT JOIN url_checks ON urls.id = url_checks.url_id
                 GROUP BY urls.id, urls.name, url_checks.status_code
-O               RDER BY urls.id DESC;'''
+                ORDER BY urls.id DESC;'''
                 )
     rows = cur.fetchall()
     conn.close()
