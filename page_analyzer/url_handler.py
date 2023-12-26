@@ -6,7 +6,7 @@ def validate_url(url):
     if not url:
         return {'status': False, 'msg': ('URL обязателен', 'danger')}
     elif not validators.url(url):
-        return {'status': False, 'msg': ('Не корректный URL', 'danger')}
+        return {'status': False, 'msg': ('Некорректный URL', 'danger')}
     return {'status': True, 'msg': ('Корректный URL', 'success')}
 
 
