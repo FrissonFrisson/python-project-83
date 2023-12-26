@@ -64,18 +64,17 @@ def not_found(error):
 def url_checks(id):
     url_info = db.get_url_info(id)
     try:
-        r = requests.get(url_info['name'])
-        flash('Страница успешно проверена', 'success')
-        html = r.content
-        soup = BeautifulSoup(html, "html.parser")
-        title = soup.find("title")
-        header = soup.find("h1")
+        responce = requests.get(url_info['name'])
+        status_code = responce.status_code
+        if status_code != 200:
+            raise requests.exceptions.RequestException
+        soup = BeautifulSoup(responce.content, "html.parser")
+        title = soup.find("title").get_text() if soup.find("title") else ''
+        header = soup.find("h1").get_text() if soup.find("h1") else ''
         description = soup.find("meta", attrs={"name": "description"})
-        status_code = r.status_code
-        h1 = header.get_text() if header else ''
-        title = title.get_text() if title else ''
         description = description['content'] if description else ''
-        db.add_check_info(id, status_code, h1, title, description)
+        db.add_check_info(id, status_code, header, title, description)
+        flash('Страница успешно проверена', 'success')
     except requests.exceptions.RequestException:
         flash('Произошла ошибка при проверке', 'danger')
     return redirect(url_for('get_page_url', id=id))

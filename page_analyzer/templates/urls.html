@@ -49,8 +49,8 @@
               {{name}}
             </a>
           </td>
-          <td>{{date}}</td>
-          <td>{{status_code}}</td>
+          <td> {% if date %}{{date}}{% endif %}</td>
+          <td> {% if status_code %}{{status_code}}{% endif %}</td>
         </tr>
         {% endfor %}
         {% endif %}  
