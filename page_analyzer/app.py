@@ -42,7 +42,11 @@ def get_page_url(id):
     checks_info = db.get_checks_list(id)
     if not url_info:
         return abort(404)
-    return render_template('page_url.html', url_info=url_info, checks_info=checks_info)
+    return render_template(
+        'page_url.html',
+        url_info=url_info,
+        checks_info=checks_info
+        )
 
 
 @app.get('/urls')
@@ -62,14 +66,14 @@ def url_checks(id):
     try:
         r = requests.get(url_info['name'])
         flash('Страница успешно проверена', 'success')
-        status_code = r.status_code
         html = r.content
         soup = BeautifulSoup(html, "html.parser")
-        title = soup.find("title").get_text()
-        header = soup.find("h1").get_text()
+        title = soup.find("title")
+        header = soup.find("h1")
         description = soup.find("meta", attrs={"name": "description"})
-        h1 = header if header else ''
-        title = title if title else ''
+        status_code = r.status_code
+        h1 = header.get_text() if header else ''
+        title = title.get_text() if title else ''
         description = description['content'] if description else ''
         db.add_check_info(id, status_code, h1, title, description)
     except requests.exceptions.RequestException:

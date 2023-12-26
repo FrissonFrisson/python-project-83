@@ -1,7 +1,7 @@
 CREATE TABLE urls (
     id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name varchar(255),
-    created_at timestamp 
+    created_at date 
 );
 
 
@@ -12,5 +12,5 @@ CREATE TABLE url_checks (
     h1 varchar(255),
     title varchar(255),
     description varchar(255),
-    created_at timestamp 
+    created_at date 
 );

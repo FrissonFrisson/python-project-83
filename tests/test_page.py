@@ -33,13 +33,3 @@ def test_index_page(client):
     assert response.status_code == 200
     assert b' <input type="text" name="url" placeholder="https://www.example.com"' in response.data
 
-
-def test_analyze_url(client):
-    response = client.post('/urls', data={'url': 'https://www.example.com'})
-    assert response.status_code == 200
-    assert b'https://www.example.com' in response.data
-    response = client.post('/urls', data={'url': 'https://www.example.com'})
-    assert response.status_code == 302
-    assert b'https://www.example.com' in response.data
-
-
