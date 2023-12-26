@@ -46,7 +46,7 @@ def get_page_url(id):
         'page_url.html',
         url_info=url_info,
         checks_info=checks_info
-        )
+    )
 
 
 @app.get('/urls')

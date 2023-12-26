@@ -1,6 +1,7 @@
 import pytest
 from page_analyzer import app as my_app
 
+
 @pytest.fixture()
 def app():
     app = my_app
@@ -32,4 +33,3 @@ def test_index_page(client):
     response = client.get('/')
     assert response.status_code == 200
     assert b' <input type="text" name="url" placeholder="https://www.example.com"' in response.data
-
