@@ -11,12 +11,7 @@ def app():
     }
     )
 
-
-    # other setup can go here
-
     yield app
-
-    # clean up / reset resources here
 
 
 @pytest.fixture()
