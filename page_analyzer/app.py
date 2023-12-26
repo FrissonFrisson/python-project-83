@@ -22,7 +22,7 @@ def analyze_url():
     validate = validate_url(url)
     if validate['status'] is False:
         flash(*validate['msg'])
-        return render_template('index.html')
+        return render_template('index.html'), 422
     url = normalize_urls(url)
 
     if db.check_in_urls(url):
