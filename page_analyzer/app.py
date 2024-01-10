@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template
 from flask import url_for, flash, abort, redirect
 import os
-from bs4 import BeautifulSoup
 import requests
 from page_analyzer.utils import validate_url, normalize_url, parse_tags
 from page_analyzer import db
@@ -45,7 +44,6 @@ def get_page_url(id):
     db.close(conn)
     if not url:
         return abort(404)
-    
     return render_template(
         'page_url.html',
         url=url,

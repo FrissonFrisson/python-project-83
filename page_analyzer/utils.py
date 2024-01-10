@@ -2,6 +2,7 @@ import validators
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
+
 def validate_url(url):
     if not url:
         return 'URL обязателен', 'danger'

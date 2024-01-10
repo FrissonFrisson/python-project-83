@@ -5,7 +5,7 @@ description = "SEO analyzer"
 authors = ["Frisson"]
 readme = "README.md"
 packages = [{include = "page_analyzer"}]
-repositories = [{ url = "https://github.com/FrissonFrisson/python-project-83.git", type = "git" }]
+repository = "https://github.com/FrissonFrisson/python-project-83.git"
 
 [tool.poetry.dependencies]
 python = ">=3.10, <4.0"
