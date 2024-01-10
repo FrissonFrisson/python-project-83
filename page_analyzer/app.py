@@ -3,55 +3,61 @@ from flask import url_for, flash, abort, redirect
 import os
 from bs4 import BeautifulSoup
 import requests
-from page_analyzer.url_handler import validate_url, normalize_urls
+from page_analyzer.utils import validate_url, normalize_url, parse_tags
 from page_analyzer import db
 
-SECRET_KEY = os.getenv('SECRET_KEY')
 app = Flask(__name__)
-app.secret_key = SECRET_KEY
+app.secret_key = os.getenv('SECRET_KEY')
 
 
 @app.route('/')
-def index_page():
+def index():
     return render_template('index.html')
 
 
 @app.route('/urls', methods=['POST'])
-def analyze_url():
+def check_url():
+    conn = db.connect()
     url = request.form['url']
     validate = validate_url(url)
-    if validate['status'] is False:
-        flash(*validate['msg'])
+    if validate:
+        flash(*validate)
         return render_template('index.html'), 422
-    url = normalize_urls(url)
+    url = normalize_url(url)
 
-    if db.check_in_urls(url):
-        id = db.get_id_url(url)
+    if db.get_url_by_name(conn, url):
+        id = db.get_url_by_name(conn, url)['id']
+        db.close(conn)
         flash('Страница уже существует', 'info')
         return redirect(url_for('get_page_url', id=id))
     else:
-        db.add_url(url)
-        id = db.get_id_url(url)
+        id = db.add_url(conn, url)
+        db.close(conn)
         flash('Страница успешно добавлена', 'success')
         return redirect(url_for('get_page_url', id=id))
 
 
 @app.route('/urls/<int:id>')
 def get_page_url(id):
-    url_info = db.get_url_info(id)
-    checks_info = db.get_checks_list(id)
-    if not url_info:
+    conn = db.connect()
+    url = db.get_url_by_id(conn, id)
+    url_checks = db.get_url_checks(conn, id)
+    db.close(conn)
+    if not url:
         return abort(404)
+    
     return render_template(
         'page_url.html',
-        url_info=url_info,
-        checks_info=checks_info
+        url=url,
+        url_checks=url_checks
     )
 
 
 @app.get('/urls')
 def get_page_urls():
-    list_urls = db.get_list_urls()
+    conn = db.connect()
+    list_urls = db.get_urls(conn)
+    db.close(conn)
     return render_template('urls.html', urls=list_urls)
 
 
@@ -60,21 +66,23 @@ def not_found(error):
     return render_template('404.html'), 404
 
 
+@app.errorhandler(500)
+def internal_server_error(error):
+    return render_template('500.html'), 500
+
+
 @app.route('/urls/<int:id>/checks', methods=['POST'])
 def url_checks(id):
-    url_info = db.get_url_info(id)
+    conn = db.connect()
+    url = db.get_url_by_id(conn, id)
     try:
-        responce = requests.get(url_info['name'])
-        status_code = responce.status_code
-        if status_code != 200:
-            raise requests.exceptions.RequestException
-        soup = BeautifulSoup(responce.content, "html.parser")
-        title = soup.find("title").get_text() if soup.find("title") else ''
-        header = soup.find("h1").get_text() if soup.find("h1") else ''
-        description = soup.find("meta", attrs={"name": "description"})
-        description = description['content'] if description else ''
-        db.add_check_info(id, status_code, header, title, description)
+        response = requests.get(url.name)
+        status_code = response.status_code
+        response.raise_for_status()
+        header, title, description = parse_tags(response.content)
+        db.add_check_info(conn, id, status_code, header, title, description)
         flash('Страница успешно проверена', 'success')
     except requests.exceptions.RequestException:
         flash('Произошла ошибка при проверке', 'danger')
+    db.close(conn)
     return redirect(url_for('get_page_url', id=id))

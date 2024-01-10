@@ -1,10 +1,11 @@
 [tool.poetry]
 name = "hexlet-code"
 version = "0.1.0"
-description = ""
-authors = ["Your Name"]
+description = "SEO analyzer"
+authors = ["Frisson"]
 readme = "README.md"
 packages = [{include = "page_analyzer"}]
+repositories = [{ url = "https://github.com/FrissonFrisson/python-project-83.git", type = "git" }]
 
 [tool.poetry.dependencies]
 python = ">=3.10, <4.0"
@@ -15,6 +16,7 @@ validators = "^0.22.0"
 requests = "^2.31.0"
 beautifulsoup4 = "^4.12.2"
 bs4 = "^0.0.1"
+pip = "^23.3.2"
 
 
 [tool.poetry.group.dev.dependencies]
