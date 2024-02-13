@@ -18,8 +18,12 @@ def normalize_url(url):
 
 def parse_tags(content):
     soup = BeautifulSoup(content, "html.parser")
-    title = soup.find("title").get_text() if soup.find("title") else ''
-    header = soup.find("h1").get_text() if soup.find("h1") else ''
+    tags = {'title': '',
+            'h1': '',
+            'description': ''
+            }
     description = soup.find("meta", attrs={"name": "description"})
-    description = description['content'] if description else ''
-    return header, title, description
+    tags['title'] = soup.find("title").get_text() if soup.find("title") else ''
+    tags['h1'] = soup.find("h1").get_text() if soup.find("h1") else ''
+    tags['description'] = description['content'] if description else ''
+    return tags
