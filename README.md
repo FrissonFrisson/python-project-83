@@ -53,4 +53,4 @@ A brief description of what this project does and who it's for
 
  - [Demo project](https://test-4izv.onrender.com/urls)
 
- ![F](https://github.com/FrissonFrisson/python-project-83/blob/main/demo.gif)
+ ![F](https://github.com/FrissonFrisson/python-project-83/blob/assets/demo.gif)
