@@ -22,19 +22,19 @@ def index():
 @app.route('/urls', methods=['POST'])
 def check_url():
     conn = db.connect(DATABASE_URL)
-    url = request.form['url']
-    validate_error = validate_url(url)
+    raw_url = request.form['url']
+    validate_error = validate_url(raw_url)
     if validate_error:
         flash(*validate_error)
         return render_template('index.html'), 422
-    url = normalize_url(url)
-    id = db.get_url_by_name(conn, url)
-    if id:
+    normalized_url = normalize_url(raw_url)
+    url_info = db.get_url_by_name(conn, normalized_url)
+    if url_info:
         db.close(conn)
         flash('Страница уже существует', 'info')
-        return redirect(url_for('get_page_url', id=id.id))
+        return redirect(url_for('get_page_url', id=url_info.id))
     else:
-        id = db.add_url(conn, url)
+        id = db.add_url(conn, normalized_url)
         db.close(conn)
         flash('Страница успешно добавлена', 'success')
         return redirect(url_for('get_page_url', id=id))

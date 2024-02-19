@@ -1,7 +1,4 @@
 {% extends 'base.html' %}
-{% block flashmsg %}
-{% include "flashmsg.html" %}
-{% endblock %}
 {% block h1 %}Сайт: {{url['name']}}{% endblock %}
 {% block body %}
 <div class="table-responsive">
@@ -24,7 +21,8 @@
 </div>
 
   <h2 class="mt-5 mb-3">Проверки</h2>
-  <form method="post" action="/urls/{{url['id']}}/checks">
+  <form method="post" action="{{ url_for('url_checks', id=url.id) }}">
+
   <input type="submit" class="btn btn-primary" value="Запустить проверку">
   </form>
   
